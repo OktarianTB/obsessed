@@ -6,7 +6,7 @@ using UnityEngine;
 public class Money : MonoBehaviour
 {
 
-    float heal = 10f;
+    float heal = 5f;
 
     BoxCollider2D collider;
     PlayerHealth playerHealth;

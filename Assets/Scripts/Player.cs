@@ -18,21 +18,29 @@ public class Player : MonoBehaviour
     Vector3 moveDistance;
     Rigidbody2D rigidbody;
     BoxCollider2D collider;
-
+    PlayerRewind playerRewind;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
+        playerRewind = FindObjectOfType<PlayerRewind>();
 
         jumpVelocityY = 2 * jumpHeight / timeToJumpApex;
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+
+        if (!playerRewind)
+        {
+            Debug.LogWarning("Player rewind is missing");
+        }
     }
     
     void FixedUpdate()
     {
-        MovePlayer();
-
+        if (!playerRewind.timeIsRewinding)
+        {
+            MovePlayer();
+        }
     }
 
     private void MovePlayer()

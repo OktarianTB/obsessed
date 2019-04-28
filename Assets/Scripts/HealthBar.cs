@@ -8,8 +8,8 @@ public class HealthBar : MonoBehaviour
     PlayerHealth playerHealth;
 
     float currentBarHealth;
-    float increasePerPeriod = 0.25f;
-    float period = 0.1f;
+    float increasePerPeriod = 0.5f;
+    float period = 0.07f;
     float time;
 
     void Start()
@@ -40,6 +40,11 @@ public class HealthBar : MonoBehaviour
         {
             time = 0f;
             UpdateBar();
+        }
+
+        if(currentBarHealth <= 0)
+        {
+            print("Player has died");
         }
     }
 
