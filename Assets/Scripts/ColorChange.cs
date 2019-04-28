@@ -9,7 +9,7 @@ public class ColorChange : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
     Color colorA, colorB;
-    Color[] colors = {Color.black, Color.red, Color.yellow, Color.blue, Color.green, Color.cyan, Color.magenta, Color.yellow }; //must be an even length
+    Color[] colors = {Color.blue, Color.magenta, Color.red, Color.yellow, Color.green, Color.cyan, Color.blue, Color.cyan }; //must be an even length
 
     int colorIndex;
     float pingPongSpeedFactor = 0.05f;
@@ -53,12 +53,7 @@ public class ColorChange : MonoBehaviour
 
     private void UpdateColor()
     {
-        if(colorIndex == -1)
-        {
-            colorB = colors[1];
-            colorIndex++;
-        }
-        else if(colorIndex < colors.Length - 2)
+        if(colorIndex < colors.Length - 2)
         {
             if (!pingPongFunctionIsIncreasing)
             {

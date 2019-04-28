@@ -1,50 +1,66 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Controller2D))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class Player : MonoBehaviour
 {
 
     float gravity;
-    float jumpVelocity;
+    float jumpVelocityY;
+    float jumpVelocityX = 6f;
     float jumpHeight = 2.5f;
-    float timeToJumpApex = .4f;
-    float moveSpeed = 2;
-    float accelerationTimeAirborne = 0.15f;
-    float accelerationTimeGrounded = 0.1f;
-    float velocitySmoothing;
+    float timeToJumpApex = .3f;
+    float moveSpeed = 3f;
 
     Vector3 moveDistance;
-    Controller2D controller;
+    Rigidbody2D rigidbody;
+    BoxCollider2D collider;
 
 
     void Start()
     {
-        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-        jumpVelocity = 2 * jumpHeight / timeToJumpApex;
+        rigidbody = GetComponent<Rigidbody2D>();
+        collider = GetComponent<BoxCollider2D>();
 
-        controller = GetComponent<Controller2D>();
+        jumpVelocityY = 2 * jumpHeight / timeToJumpApex;
+        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
     }
     
-    void Update()
+    void FixedUpdate()
     {
-        if(controller.collisionInfo.above || controller.collisionInfo.below)
+        MovePlayer();
+
+    }
+
+    private void MovePlayer()
+    {
+        moveDistance.x = moveSpeed;
+
+        if (PlayerIsGrounded())
         {
             moveDistance.y = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && controller.collisionInfo.below)
+        if(Input.GetKey(KeyCode.Space) && PlayerIsGrounded())
         {
-            moveDistance.y += jumpVelocity;
+            moveDistance.y = jumpVelocityY;
+            moveDistance.x += jumpVelocityX;
         }
 
-        float smoothingTime = controller.collisionInfo.below ? accelerationTimeGrounded : accelerationTimeAirborne;
-        moveDistance.x = Mathf.SmoothDamp(moveDistance.x, moveSpeed, ref velocitySmoothing, smoothingTime);
+        if (!PlayerIsGrounded())
+        {
+            moveDistance.y += gravity * Time.deltaTime;
+        }
 
-        moveDistance.y += gravity * Time.deltaTime;
-
-        controller.MovePlayer(moveDistance * Time.deltaTime);
-
+        rigidbody.transform.Translate(moveDistance * Time.deltaTime);
     }
+
+    bool PlayerIsGrounded()
+    {
+        return collider.IsTouchingLayers(LayerMask.GetMask("Objects"));
+    }
+
 }

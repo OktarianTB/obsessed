@@ -5,6 +5,7 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     Player player;
+    float offset = 3.5f;
 
     void Start()
     {
@@ -31,6 +32,6 @@ public class FollowPlayer : MonoBehaviour
     private void FollowPlayerPosition()
     {
         float playerPositionX = player.transform.position.x;
-        transform.position = new Vector3(playerPositionX, transform.position.y, transform.position.z);
+        transform.position = new Vector3(playerPositionX + offset, transform.position.y, transform.position.z);
     }
 }

@@ -15,8 +15,8 @@ TagManager:
   - 
   - Player
   - Objects
-  - 
-  - 
+  - HealthBar
+  - Spikes
   - 
   - 
   - 
@@ -44,6 +44,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 1582631197
+    locked: 0
+  - name: Spikes
+    uniqueID: 2654904959
+    locked: 0
   - name: Player
     uniqueID: 3352591775
+    locked: 0
+  - name: HealthBar
+    uniqueID: 880282605
     locked: 0
