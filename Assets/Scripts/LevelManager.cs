@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
 
     private void ManageInput()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (currentBuildIndex == 0 || currentBuildIndex == 2)
             {

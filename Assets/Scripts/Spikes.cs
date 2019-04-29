@@ -8,7 +8,7 @@ public class Spikes : MonoBehaviour
 
     float damage = 20f;
 
-    Collider2D collider;
+    new Collider2D collider;
     PlayerHealth playerHealth;
     PlayerRewind playerRewind;
 

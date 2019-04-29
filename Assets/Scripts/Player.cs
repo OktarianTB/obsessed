@@ -10,17 +10,24 @@ public class Player : MonoBehaviour
 
     float gravity;
     float jumpVelocityY;
-    float jumpVelocityX = 12f;
+    float jumpVelocityX = 5f;
     float jumpHeight = 2.5f;
     float timeToJumpApex = .3f;
     float moveSpeed = 3f;
+
+    int scorePerSecond = 1;
+    int numberOfFramesPerSecond;
+    int currentCount = 0;
+
     float timeUntilNextLevel = 2f;
+    bool gameIsFinished = false;
 
     Vector3 moveDistance;
-    Rigidbody2D rigidbody;
-    BoxCollider2D collider;
+    new Rigidbody2D rigidbody;
+    new BoxCollider2D collider;
     PlayerRewind playerRewind;
     LevelManager levelManager;
+    ScoreManager scoreManager;
 
     void Start()
     {
@@ -28,9 +35,14 @@ public class Player : MonoBehaviour
         collider = GetComponent<BoxCollider2D>();
         playerRewind = FindObjectOfType<PlayerRewind>();
         levelManager = FindObjectOfType<LevelManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
 
         jumpVelocityY = 2 * jumpHeight / timeToJumpApex;
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+
+        numberOfFramesPerSecond = Mathf.RoundToInt(1 / Time.fixedDeltaTime);
+
+        scoreManager.ResetScore();
 
         if (!playerRewind)
         {
@@ -40,6 +52,10 @@ public class Player : MonoBehaviour
         {
             Debug.LogWarning("Level Manager wasn't found");
         }
+        if (!scoreManager)
+        {
+            Debug.LogWarning("Score manager hasn't been found");
+        }
     }
     
     void FixedUpdate()
@@ -48,6 +64,8 @@ public class Player : MonoBehaviour
         {
             MovePlayer();
         }
+
+        ManageScore();
     }
 
     private void MovePlayer()
@@ -59,7 +77,7 @@ public class Player : MonoBehaviour
             moveDistance.y = 0;
         }
 
-        if(Input.GetKey(KeyCode.Space) && PlayerIsGrounded())
+        if(Input.GetKey(KeyCode.Space) && PlayerIsGrounded() && !gameIsFinished)
         {
             moveDistance.y = jumpVelocityY;
             moveDistance.x += jumpVelocityX;
@@ -78,9 +96,25 @@ public class Player : MonoBehaviour
         return collider.IsTouchingLayers(LayerMask.GetMask("Objects"));
     }
 
+    private void ManageScore()
+    {
+        if (!playerRewind.timeIsRewinding && !gameIsFinished)
+        {
+            if(currentCount >= numberOfFramesPerSecond)
+            {
+                currentCount = 0;
+                scoreManager.AddToScore(scorePerSecond);
+            }
+
+            currentCount++;
+        }
+    }
+
     public void PlayerDeath()
     {
-        Time.timeScale = 0f;
+        gameIsFinished = true;
+        StartCoroutine(LoadEnd());
+        scoreManager.UpdateHighScore();
     }
 
     private IEnumerator LoadEnd()

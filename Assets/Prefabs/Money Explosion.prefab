@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1476686744094831582}
   - component: {fileID: 1978796183235911991}
   - component: {fileID: 7296253544799052420}
+  - component: {fileID: 3982833984809587153}
   m_Layer: 0
   m_Name: Money Explosion
   m_TagString: Untagged
@@ -4765,3 +4766,16 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &3982833984809587153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243294853186392919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f5bf5143bb9e03468503e2f0e8b16de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBeforeDestruction: 3

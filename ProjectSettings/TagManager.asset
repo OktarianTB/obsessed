@@ -47,6 +47,12 @@ TagManager:
   - name: Floor
     uniqueID: 1582631197
     locked: 0
+  - name: End
+    uniqueID: 2842465509
+    locked: 0
+  - name: Money
+    uniqueID: 4134944401
+    locked: 0
   - name: Spikes
     uniqueID: 2654904959
     locked: 0

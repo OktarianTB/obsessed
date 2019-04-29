@@ -7,14 +7,17 @@ public class Money : MonoBehaviour
 {
     public GameObject explosionParticle;
     float heal = 5f;
+    int scorePerMoney = 5;
 
-    BoxCollider2D collider;
+    new BoxCollider2D collider;
     PlayerHealth playerHealth;
+    ScoreManager scoreManager;
  
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
         collider = GetComponent<BoxCollider2D>();
+        scoreManager = FindObjectOfType<ScoreManager>();
 
         if (!playerHealth)
         {
@@ -24,12 +27,18 @@ public class Money : MonoBehaviour
         {
             Debug.LogWarning("No explosion particle");
         }
+        if (!scoreManager)
+        {
+            Debug.LogWarning("Score manager hasn't been found");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collider.IsTouchingLayers(LayerMask.GetMask("Player"))){
+        if (collider.IsTouchingLayers(LayerMask.GetMask("Player")))
+        {
             playerHealth.HealPlayer(heal);
+            scoreManager.AddToScore(scorePerMoney);
             Instantiate(explosionParticle, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
