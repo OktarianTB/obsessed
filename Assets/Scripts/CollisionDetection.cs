@@ -12,11 +12,13 @@ public class CollisionDetection : MonoBehaviour
     Vector2 rightCenter;
     PlayerHealth playerHealth;
     PlayerRewind playerRewind;
+    SoundManager soundManager;
 
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerRewind = FindObjectOfType<PlayerRewind>();
+        soundManager = FindObjectOfType<SoundManager>();
 
         if (!playerHealth)
         {
@@ -25,6 +27,10 @@ public class CollisionDetection : MonoBehaviour
         if (!playerRewind)
         {
             Debug.LogWarning("Player Rewind script hasn't been found");
+        }
+        if (!soundManager)
+        {
+            Debug.LogWarning("Sound manager hasn't been found");
         }
     }
 
@@ -42,6 +48,7 @@ public class CollisionDetection : MonoBehaviour
 
         if (hit && !playerRewind.timeIsRewinding)
         {
+            soundManager.PlayClip(soundManager.bangClip, 0.4f);
             playerHealth.DamagePlayer(damage);
             playerRewind.StartRewind();
         }

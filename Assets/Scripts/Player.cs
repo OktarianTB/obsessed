@@ -21,13 +21,16 @@ public class Player : MonoBehaviour
 
     float timeUntilNextLevel = 2f;
     bool gameIsFinished = false;
+    bool particlesAreActive = true;
 
+    public ParticleSystem particle;
     Vector3 moveDistance;
     new Rigidbody2D rigidbody;
     new BoxCollider2D collider;
     PlayerRewind playerRewind;
     LevelManager levelManager;
     ScoreManager scoreManager;
+    SoundManager soundManager;
 
     void Start()
     {
@@ -36,6 +39,7 @@ public class Player : MonoBehaviour
         playerRewind = FindObjectOfType<PlayerRewind>();
         levelManager = FindObjectOfType<LevelManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
+        soundManager = FindObjectOfType<SoundManager>();
 
         jumpVelocityY = 2 * jumpHeight / timeToJumpApex;
         gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -56,6 +60,14 @@ public class Player : MonoBehaviour
         {
             Debug.LogWarning("Score manager hasn't been found");
         }
+        if (!soundManager)
+        {
+            Debug.LogWarning("Sound manager hasn't been found");
+        }
+        if (!particle)
+        {
+            Debug.LogWarning("Particle system is missing");
+        }
     }
     
     void FixedUpdate()
@@ -66,6 +78,7 @@ public class Player : MonoBehaviour
         }
 
         ManageScore();
+        ManageParticle();
     }
 
     private void MovePlayer()
@@ -76,16 +89,16 @@ public class Player : MonoBehaviour
         {
             moveDistance.y = 0;
         }
+        else
+        {
+            moveDistance.y += gravity * Time.deltaTime;
+        }
 
         if(Input.GetKey(KeyCode.Space) && PlayerIsGrounded() && !gameIsFinished)
         {
             moveDistance.y = jumpVelocityY;
             moveDistance.x += jumpVelocityX;
-        }
-
-        if (!PlayerIsGrounded())
-        {
-            moveDistance.y += gravity * Time.deltaTime;
+            soundManager.PlayClip(soundManager.randomJumpClip(), 0.1f);
         }
 
         rigidbody.transform.Translate(moveDistance * Time.deltaTime);
@@ -115,6 +128,20 @@ public class Player : MonoBehaviour
         gameIsFinished = true;
         StartCoroutine(LoadEnd());
         scoreManager.UpdateHighScore();
+    }
+
+    public void ManageParticle()
+    {
+        if(particlesAreActive && playerRewind.timeIsRewinding)
+        {
+            particle.Stop();
+            particlesAreActive = false;
+        }
+        if (!particlesAreActive && !playerRewind.timeIsRewinding)
+        {
+            particle.Play();
+            particlesAreActive = true;
+        }
     }
 
     private IEnumerator LoadEnd()

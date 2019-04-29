@@ -11,12 +11,14 @@ public class Spikes : MonoBehaviour
     new Collider2D collider;
     PlayerHealth playerHealth;
     PlayerRewind playerRewind;
+    SoundManager soundManager;
 
     void Start()
     {
         collider = GetComponent<Collider2D>();
         playerHealth = FindObjectOfType<PlayerHealth>();
         playerRewind = FindObjectOfType<PlayerRewind>();
+        soundManager = FindObjectOfType<SoundManager>();
 
         if (!playerHealth)
         {
@@ -26,6 +28,10 @@ public class Spikes : MonoBehaviour
         {
             Debug.LogWarning("Player Rewind script hasn't been found");
         }
+        if (!soundManager)
+        {
+            Debug.LogWarning("Sound manager hasn't been found");
+        }
         
     }
 
@@ -34,6 +40,7 @@ public class Spikes : MonoBehaviour
         if (collider.IsTouchingLayers(LayerMask.GetMask("Player")) && !playerRewind.timeIsRewinding)
         {
             playerHealth.DamagePlayer(damage);
+            soundManager.PlayClip(soundManager.ouchClip, 0.05f);
             playerRewind.StartRewind();
         }
     }

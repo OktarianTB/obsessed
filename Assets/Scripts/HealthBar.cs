@@ -7,6 +7,7 @@ public class HealthBar : MonoBehaviour
     Transform bar;
     PlayerHealth playerHealth;
     Player player;
+    SoundManager soundManager;
 
     public float currentBarHealth;
     float increasePerPeriod = 0.5f;
@@ -18,6 +19,7 @@ public class HealthBar : MonoBehaviour
         bar = transform.Find("Bar");
         playerHealth = FindObjectOfType<PlayerHealth>();
         player = FindObjectOfType<Player>();
+        soundManager = FindObjectOfType<SoundManager>();
 
         if (!bar)
         {
@@ -32,6 +34,10 @@ public class HealthBar : MonoBehaviour
         if (!player)
         {
             Debug.LogWarning("Level Manager wasn't found");
+        }
+        if (!soundManager)
+        {
+            Debug.LogWarning("Sound Manager wasn't found");
         }
 
         bar.localScale = new Vector3(1f, 1f, 1f);
@@ -50,6 +56,7 @@ public class HealthBar : MonoBehaviour
 
         if(currentBarHealth <= 0)
         {
+            soundManager.PlayClip(soundManager.deathClip, 0.04f);
             player.PlayerDeath();
         }
     }

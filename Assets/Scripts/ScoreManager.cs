@@ -9,8 +9,8 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        int numberOfGameSessions = FindObjectsOfType<ScoreManager>().Length;
-        if(numberOfGameSessions > 1)
+        int numberOfSessions = FindObjectsOfType<ScoreManager>().Length;
+        if(numberOfSessions > 1)
         {
             Destroy(gameObject);
         }

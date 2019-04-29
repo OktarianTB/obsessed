@@ -7,17 +7,19 @@ public class Money : MonoBehaviour
 {
     public GameObject explosionParticle;
     float heal = 5f;
-    int scorePerMoney = 5;
+    int scorePerMoney = 10;
 
     new BoxCollider2D collider;
     PlayerHealth playerHealth;
     ScoreManager scoreManager;
+    SoundManager soundManager;
  
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
         collider = GetComponent<BoxCollider2D>();
         scoreManager = FindObjectOfType<ScoreManager>();
+        soundManager = FindObjectOfType<SoundManager>();
 
         if (!playerHealth)
         {
@@ -31,6 +33,10 @@ public class Money : MonoBehaviour
         {
             Debug.LogWarning("Score manager hasn't been found");
         }
+        if (!soundManager)
+        {
+            Debug.LogWarning("Sound manager hasn't been found");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -39,6 +45,8 @@ public class Money : MonoBehaviour
         {
             playerHealth.HealPlayer(heal);
             scoreManager.AddToScore(scorePerMoney);
+            soundManager.PlayClip(soundManager.moneyClip, 0.15f);
+
             Instantiate(explosionParticle, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
