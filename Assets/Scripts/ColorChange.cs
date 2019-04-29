@@ -12,7 +12,7 @@ public class ColorChange : MonoBehaviour
     Color[] colors = {Color.blue, Color.magenta, Color.red, Color.yellow, Color.green, Color.cyan, Color.blue, Color.cyan }; //must be an even length
 
     int colorIndex;
-    float pingPongSpeedFactor = 0.05f;
+    public float pingPongSpeedFactor = 0.05f;
     float currentPingPongValue;
     bool pingPongFunctionIsIncreasing;
 
@@ -23,6 +23,11 @@ public class ColorChange : MonoBehaviour
         colorB = colors[1];
         colorIndex = 0;
         pingPongFunctionIsIncreasing = true;
+
+        if(colors.Length % 2 != 0)
+        {
+            Debug.LogError("Length of colors array isn't even: the color change logic will not work");
+        }
     }
     
     void Update()

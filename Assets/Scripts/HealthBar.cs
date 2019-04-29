@@ -6,8 +6,9 @@ public class HealthBar : MonoBehaviour
 {
     Transform bar;
     PlayerHealth playerHealth;
+    Player player;
 
-    float currentBarHealth;
+    public float currentBarHealth;
     float increasePerPeriod = 0.5f;
     float period = 0.07f;
     float time;
@@ -16,6 +17,7 @@ public class HealthBar : MonoBehaviour
     {
         bar = transform.Find("Bar");
         playerHealth = FindObjectOfType<PlayerHealth>();
+        player = FindObjectOfType<Player>();
 
         if (!bar)
         {
@@ -26,6 +28,10 @@ public class HealthBar : MonoBehaviour
         {
             Debug.LogWarning("Player health wasn't found");
             return;
+        }
+        if (!player)
+        {
+            Debug.LogWarning("Level Manager wasn't found");
         }
 
         bar.localScale = new Vector3(1f, 1f, 1f);
@@ -44,7 +50,7 @@ public class HealthBar : MonoBehaviour
 
         if(currentBarHealth <= 0)
         {
-            print("Player has died");
+            player.PlayerDeath();
         }
     }
 

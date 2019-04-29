@@ -10,11 +10,13 @@ public class PlayerHealth : MonoBehaviour
     public void DamagePlayer(float damage)
     {
         currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, 100f);
     }
 
     public void HealPlayer(float heal)
     {
         currentHealth += heal;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, 100f);
     }
 
 }

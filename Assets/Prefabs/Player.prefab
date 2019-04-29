@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4246024012281600987}
   - component: {fileID: 4246024012281600551}
   - component: {fileID: 2391398514330394844}
+  - component: {fileID: 2183716324148215518}
+  - component: {fileID: 1516563529776170979}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -168,6 +170,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1708c151b637ce447906bc05b8d008bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewindTime: 0
+  timeIsRewinding: 0
   rewindCanvas: {fileID: 3008633966627353675, guid: 58a377aacea79fe488bdabbef6406c71,
     type: 3}
+--- !u!114 &2183716324148215518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246024012281600985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316a10b9abf2c8041823124d982c87ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 512
+--- !u!114 &1516563529776170979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4246024012281600985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e25fa684352b214fb0d9666797c2e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 0}
