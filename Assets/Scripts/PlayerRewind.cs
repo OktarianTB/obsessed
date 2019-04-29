@@ -6,23 +6,35 @@ using UnityEngine.UI;
 
 public class PlayerRewind : MonoBehaviour
 {
+    int rewindScore = 10;
     float recordTime = 5f;
     float currentAlpha = 100f;
     float alphaDecrease;
+    float timeInvincible = 3f;
+
+    public bool playerIsInvicible = false;
     public bool timeIsRewinding;
 
     public GameObject rewindCanvas;
+    public GameObject infinityIcon;
     GameObject canvasInstance;
+    GameObject infinityInstance;
     List<Vector3> positions;
+    ScoreManager scoreManager;
  
     void Start()
     {
+        scoreManager = FindObjectOfType<ScoreManager>();
         positions = new List<Vector3>();
         timeIsRewinding = false;
 
         if (!rewindCanvas)
         {
             Debug.LogWarning("Rewind canvas is missing");
+        }
+        if (!scoreManager)
+        {
+            Debug.LogWarning("Score manager hasn't been found");
         }
     }
 
@@ -76,6 +88,8 @@ public class PlayerRewind : MonoBehaviour
         Time.timeScale = 0.6f;
         canvasInstance = Instantiate(rewindCanvas);
         alphaDecrease = 100 / (float) positions.Count;
+        scoreManager.AddToScore(-rewindScore);
+        playerIsInvicible = true;
     }
 
     private void StopRewind()
@@ -84,6 +98,9 @@ public class PlayerRewind : MonoBehaviour
         timeIsRewinding = false;
         Time.timeScale = 1f;
         currentAlpha = 100f;
+
+        infinityInstance = Instantiate(infinityIcon, transform.position, Quaternion.identity);
+        StartCoroutine(ResetInvincibility());
     }
 
     private void ManageBackground()
@@ -102,6 +119,13 @@ public class PlayerRewind : MonoBehaviour
         Color fadeColor = new Color(0.87f, 0.86f, 1f, currentAlpha / 255);
         image.color = fadeColor;
 
+    }
+
+    private IEnumerator ResetInvincibility()
+    {
+        yield return new WaitForSeconds(timeInvincible);
+        playerIsInvicible = false;
+        Destroy(infinityInstance);
     }
 
 }

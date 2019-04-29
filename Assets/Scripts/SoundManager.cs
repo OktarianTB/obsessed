@@ -6,7 +6,6 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     
-    float soundVolume = 0.2f;
     public AudioClip moneyClip;
     public AudioClip bangClip;
     public AudioClip ouchClip;

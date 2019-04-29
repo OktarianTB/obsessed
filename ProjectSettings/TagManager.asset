@@ -62,3 +62,6 @@ TagManager:
   - name: HealthBar
     uniqueID: 880282605
     locked: 0
+  - name: Infinity
+    uniqueID: 660955711
+    locked: 0

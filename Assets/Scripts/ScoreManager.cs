@@ -23,6 +23,7 @@ public class ScoreManager : MonoBehaviour
     public void AddToScore(int score)
     {
         currentScore += score;
+        currentScore = Mathf.Clamp(currentScore, 0, int.MaxValue);
     }
 
     public void UpdateHighScore()

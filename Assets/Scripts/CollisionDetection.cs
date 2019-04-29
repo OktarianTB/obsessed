@@ -46,9 +46,9 @@ public class CollisionDetection : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(rightCenter, Vector2.right, rayLength, collisionMask);
         Debug.DrawLine(rightCenter, rightCenter + Vector2.right * rayLength, Color.red);
 
-        if (hit && !playerRewind.timeIsRewinding)
+        if (hit && !playerRewind.timeIsRewinding && !playerRewind.playerIsInvicible)
         {
-            soundManager.PlayClip(soundManager.bangClip, 0.4f);
+            soundManager.PlayClip(soundManager.bangClip, 1.2f);
             playerHealth.DamagePlayer(damage);
             playerRewind.StartRewind();
         }

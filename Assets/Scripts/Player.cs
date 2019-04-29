@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         {
             moveDistance.y = jumpVelocityY;
             moveDistance.x += jumpVelocityX;
-            soundManager.PlayClip(soundManager.randomJumpClip(), 0.1f);
+            soundManager.PlayClip(soundManager.randomJumpClip(), 0.7f);
         }
 
         rigidbody.transform.Translate(moveDistance * Time.deltaTime);

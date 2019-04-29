@@ -45,7 +45,7 @@ public class Money : MonoBehaviour
         {
             playerHealth.HealPlayer(heal);
             scoreManager.AddToScore(scorePerMoney);
-            soundManager.PlayClip(soundManager.moneyClip, 0.15f);
+            soundManager.PlayClip(soundManager.moneyClip, 0.4f);
 
             Instantiate(explosionParticle, transform.position, Quaternion.identity);
             Destroy(gameObject);

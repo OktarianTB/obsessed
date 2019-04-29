@@ -7,7 +7,7 @@ public class GameMenu : MonoBehaviour
 
     bool gameIsPaused;
 
-    [SerializeField] GameObject menu;
+    public GameObject menu;
     GameObject currentMenu;
 
     void Start()

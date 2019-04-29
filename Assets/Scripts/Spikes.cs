@@ -12,6 +12,7 @@ public class Spikes : MonoBehaviour
     PlayerHealth playerHealth;
     PlayerRewind playerRewind;
     SoundManager soundManager;
+    public GameObject spikeParticle;
 
     void Start()
     {
@@ -32,15 +33,20 @@ public class Spikes : MonoBehaviour
         {
             Debug.LogWarning("Sound manager hasn't been found");
         }
+        if (!spikeParticle)
+        {
+            Debug.LogWarning("Spike particle is missing");
+        }
         
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collider.IsTouchingLayers(LayerMask.GetMask("Player")) && !playerRewind.timeIsRewinding)
+        if (collider.IsTouchingLayers(LayerMask.GetMask("Player")) && !playerRewind.timeIsRewinding && !playerRewind.playerIsInvicible)
         {
+            Instantiate(spikeParticle, transform.position, Quaternion.identity);
             playerHealth.DamagePlayer(damage);
-            soundManager.PlayClip(soundManager.ouchClip, 0.05f);
+            soundManager.PlayClip(soundManager.ouchClip, 0.55f);
             playerRewind.StartRewind();
         }
     }
