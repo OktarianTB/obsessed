@@ -1,8 +1,8 @@
 # obsessed
 This is my entry for the [44th Ludum Dare game jam](https://ldjam.com/events/ludum-dare/44/obsessed). I had lot's of fun making it and really enjoyed the challenge.
 You can play it in your browser:
-* The game jam version: here
-* The polished version with bug fixes: here
+* The game jam version: [here](https://oktarian.itch.io/obsessed)
+* The polished version with bug fixes & improvements: [here](https://oktarian.itch.io/obsessed-2)
 
 ## The Game
 The theme of the game jam was "Your life is currency". I decided to create a game inspired by Geometry Dash and implement new features and elements to do with the theme.
