@@ -11,16 +11,16 @@ public class Player : MonoBehaviour
     float gravity;
     float jumpVelocityY;
     float jumpVelocityX = 5f;
-    float jumpHeight = 2.5f;
+    float jumpHeight = 2.7f;
     float timeToJumpApex = .3f;
-    float moveSpeed = 3f;
+    float moveSpeed = 3.5f;
 
     int scorePerSecond = 1;
     int numberOfFramesPerSecond;
     int currentCount = 0;
 
     float timeUntilNextLevel = 2f;
-    bool gameIsFinished = false;
+    public bool gameIsFinished = false;
     bool particlesAreActive = true;
 
     public ParticleSystem particle;

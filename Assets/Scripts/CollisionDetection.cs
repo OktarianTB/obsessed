@@ -41,16 +41,22 @@ public class CollisionDetection : MonoBehaviour
 
     private void ManageRaycast()
     {
-        float rayLength = 0.55f;
+        float rayLength = 0.53f;
         rightCenter = transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(rightCenter, Vector2.right, rayLength, collisionMask);
-        Debug.DrawLine(rightCenter, rightCenter + Vector2.right * rayLength, Color.red);
 
-        if (hit && !playerRewind.timeIsRewinding && !playerRewind.playerIsInvicible)
+        for(int i = -1; i < 2; i++)
         {
-            soundManager.PlayClip(soundManager.bangClip, 1.2f);
-            playerHealth.DamagePlayer(damage);
-            playerRewind.StartRewind();
+            Vector2 rayOrigin = rightCenter + Vector2.up * i * 0.2f;
+            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right, rayLength, collisionMask);
+            Debug.DrawLine(rayOrigin, rayOrigin + Vector2.right * rayLength, Color.red);
+
+            if (hit && !playerRewind.timeIsRewinding && !playerRewind.playerIsInvicible)
+            {
+                soundManager.PlayClip(soundManager.bangClip, 1.6f);
+                playerHealth.DamagePlayer(damage);
+                playerRewind.StartRewind();
+            }
         }
     }
+
 }

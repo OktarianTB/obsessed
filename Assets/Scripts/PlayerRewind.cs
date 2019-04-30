@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerRewind : MonoBehaviour
 {
@@ -10,10 +11,11 @@ public class PlayerRewind : MonoBehaviour
     float recordTime = 5f;
     float currentAlpha = 100f;
     float alphaDecrease;
-    float timeInvincible = 3f;
+    float timeInvincible = 2f;
 
     public bool playerIsInvicible = false;
     public bool timeIsRewinding;
+    private bool canJump = true;
 
     public GameObject rewindCanvas;
     public GameObject infinityIcon;
@@ -21,10 +23,12 @@ public class PlayerRewind : MonoBehaviour
     GameObject infinityInstance;
     List<Vector3> positions;
     ScoreManager scoreManager;
+    Player player;
  
     void Start()
     {
         scoreManager = FindObjectOfType<ScoreManager>();
+        player = FindObjectOfType<Player>();
         positions = new List<Vector3>();
         timeIsRewinding = false;
 
@@ -36,11 +40,15 @@ public class PlayerRewind : MonoBehaviour
         {
             Debug.LogWarning("Score manager hasn't been found");
         }
+        if (!player)
+        {
+            Debug.LogWarning("Player hasn't been found");
+        }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && timeIsRewinding)
+        if (Input.GetKeyDown(KeyCode.Space) && timeIsRewinding && canJump)
         {
             StopRewind();
         }
@@ -84,12 +92,20 @@ public class PlayerRewind : MonoBehaviour
 
     public void StartRewind()
     {
+        if (player.gameIsFinished)
+        {
+            return;
+        }
+
         timeIsRewinding = true;
         Time.timeScale = 0.6f;
         canvasInstance = Instantiate(rewindCanvas);
         alphaDecrease = 100 / (float) positions.Count;
         scoreManager.AddToScore(-rewindScore);
         playerIsInvicible = true;
+
+        canJump = false;
+        StartCoroutine(ResetPlayerJump());
     }
 
     private void StopRewind()
@@ -99,6 +115,11 @@ public class PlayerRewind : MonoBehaviour
         Time.timeScale = 1f;
         currentAlpha = 100f;
 
+        ManageInvincibility();
+    }
+
+    private void ManageInvincibility()
+    {
         infinityInstance = Instantiate(infinityIcon, transform.position, Quaternion.identity);
         StartCoroutine(ResetInvincibility());
     }
@@ -126,6 +147,12 @@ public class PlayerRewind : MonoBehaviour
         yield return new WaitForSeconds(timeInvincible);
         playerIsInvicible = false;
         Destroy(infinityInstance);
+    }
+
+    private IEnumerator ResetPlayerJump()
+    {
+        yield return new WaitForSeconds(0.4f);
+        canJump = true;
     }
 
 }

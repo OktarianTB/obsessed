@@ -6,7 +6,7 @@ using UnityEngine;
 public class Spikes : MonoBehaviour
 {
 
-    float damage = 20f;
+    float damage = 25f;
 
     new Collider2D collider;
     PlayerHealth playerHealth;
